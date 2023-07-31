@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/board.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>독후감 게시판</h1>
+<div>
+<div id="free_board_btn_group">
+    <a id="board_btn2" href="{% url 'board:posts'%}">자유게시판</a>
+    <a id="board_btn4" href="{% url 'board:bookreports'%}">독후감게시판</a>
+</div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th style = "flex: 8;">Title</th>
+                <th style = "flex: 3;">book</th>
+                <th>User</th>
+                <th style = "flex: 2;">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if bookreports_list %}
+                {% for bookreport in bookreports_list%}
+                    <tr class="alert" role="alert" onclick = "window.location='{% url 'board:bookreports' %}{{bookreport.id}}/';">
+                        <th class="centered-td" scope="row">{{ bookreport.id }}</th>
+                        <td class="centered-td" style = "text-align: center; font-weight:bold; flex: 8;">{{ bookreport.title }}</td>
+                        <td class = "book_name-td" style = "flex: 3;"><p>{{ bookreport.book_title }}</p></td>
+                        <td class="centered-td">{{bookreport.user_nickname}}</td>
+                        <td class="centered-td"  style = "flex: 2;">{{ bookreport.comment_set.count }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <p>게시글이 없습니다.</p>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class='page-wrap'>
+    <!-- 페이징 처리 시작-->
+        <ul class='page-nation'>
+            <!-- 이전 페이지 -->
+            {% if bookreports_list.has_previous %}
+            <li>
+                <a href = "?page={{bookreports_list.previous_page_number}}"><<</a>
+            </li>
+            {% else %}
+            <li>
+                <a href = "#"><<</a>
+            </li>
+            {% endif %}
+            <!-- 페이지 리스트 -->
+            {% for page_number in bookreports_list.paginator.page_range %}
+            {% if page_number >= bookreports_list.number|add:-5 and page_number <= bookreports_list.number|add:5 %}
+                {% if page_number == bookreports_list.number %}
+                <li aria-current = "page">
+                    <a href = "?page={{ page_number }}">
+                        {{page_number}}
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href = "?page={{page_number}}">
+                        {{ page_number }}
+                    </a>
+                </li>
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- 다음 페이지 -->
+            {% if bookreports_list.has_next%}
+            <li>
+                <a href = "?page={{bookreports_list.next_page_number}}">>></a>
+            </li>
+            {% else %}
+            <li>
+                <a href = "#">>></a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징 처리 끝-->
+    </div>
+    <div class="btn-container">
+        <a class='btn' href="{% url 'board:bookreport_create' %}">
+            글쓰기
+        </a>
+    </div>
+{% endblock %}

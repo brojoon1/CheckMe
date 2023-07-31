@@ -1,0 +1,32 @@
+from django.db import models
+
+# Create your models here.
+    
+class Books(models.Model) :
+    title = models.TextField()
+    link = models.TextField(null=True)
+    description = models.TextField()
+    isbn13 = models.CharField(max_length = 13)
+    price_sales = models.IntegerField()
+    price_standard = models.IntegerField()
+    cover = models.TextField()
+    category_id = models.TextField()
+    category_name = models.TextField()
+    publisher = models.TextField()
+    adult = models.BooleanField()
+    fulldesc1 = models.TextField()
+    fulldesc2 = models.TextField()
+    toc = models.TextField()
+    story = models.TextField()
+    author_id = models.TextField()
+    author_name = models.TextField()
+    author_info = models.TextField()
+    phrase = models.TextField()
+    story_isnull = models.BooleanField()
+    phrase_isnull = models.BooleanField()
+    toc_isnull = models.BooleanField()
+    score = models.FloatField()
+    score_user = models.IntegerField()
+    img_src = models.TextField(null=True)
+    keyword = models.TextField()
+    book_fields = models.TextField()

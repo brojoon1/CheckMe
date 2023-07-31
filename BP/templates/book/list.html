@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/book.css' %}">
+    <script type="text/javascript" src="{% static 'js/book.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<form id="search" method="get" action="{% url 'book:list' %}" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <input type="text" class="search_input" 
+    id="book"  name="search_query" 
+    value="{{ search_query }}" placeholder = "도서 검색">
+    <button class="search_button" type = 'button' onclick = 'search()'>Search</button>
+</form>
+
+<div class = 'books'>
+</div> 
+
+<div id = 'loadingText' style='font-weight:700;margin:15px;'>
+    Loading...
+</div>
+
+<input type = 'hidden' class = 'urls' 
+value = "{% url 'book:list_child'%}?search_query={{search_query}}&count=">
+<input type = 'hidden' class = 'count' value = "0">
+<script type="text/javascript">
+    loading()
+    startLoading()
+</script>
+{% endblock %}

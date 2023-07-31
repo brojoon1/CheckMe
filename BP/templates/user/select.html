@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+<script type="text/javascript" src="{% static 'js/user.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>
+    무슨 장르를 좋아하시나요?
+</h1>
+<h3 class='genre_title'>
+    좋아하시는 장르를 4종류 골라주세요!
+</h3>
+<br>
+<form id = "select" method="post" name="registerForm" onsubmit="return validateForm()" action="{% url 'user:select' %}" entype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <!-- js 작동을 위해 사용 -->
+    <input type = "hidden" id = "total" value = "0">
+    <input type = "hidden" id = "summary" name = "summary" value = "0">
+    <h2 class='genre_title'>소설</h2>
+    <div class='genre_wrap'>
+    {% for novel in novels %}
+        <div class = 'ganre_selecter' for="{{novel.1}}" onclick = "activate({{forloop.counter}})">
+            <input type = "hidden" id = "{{novel.1}}" name = "{{novel.1}}" value = "0">
+            <h4>{{novel.0}}</h4>
+        </div>
+    {% endfor %}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr class='genre_hr'>
+
+    <h2 class='genre_title'>에세이</h2>
+    <div class='genre_wrap'>
+    {% for essay in essays %}
+        <div class = 'ganre_selecter' for="{{essay.1}}" onclick = "activate({{forloop.counter|add:"17"}})">
+            <input type = "hidden" id = "{{essay.1}}" name = "{{essay.1}}" value = "0">
+            <h4>{{essay.0}}</h4>
+        </div>
+    {% endfor %}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr class='genre_hr'>
+
+    <h2 class='genre_title'>자기계발</h2>
+    <div class='genre_wrap'>
+    {% for self in selfs %}
+        <div class = 'ganre_selecter' for="{{self.1}}" onclick = "activate({{forloop.counter|add:"37"}})">
+            <input type = "hidden" id = "{{self.1}}" name = "{{self.1}}" value = "0">
+            <h4>{{self.0}}</h4>
+        </div>
+    {% endfor %}
+    </div>
+    <button style='width:100px;margin-left:10px;margin-right:10px;' class = 'button_1 end_btn' type = "button" onclick = "check_submit()">완료</button>
+    <button style='width:100px;margin:10px;' class="button_1" type="button" onclick = "window.location='{% url 'user:mypage' %}';">취소</button>
+</form>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/board.css' %}">
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h4>[ 글 제목 ]</h4>
+    <h1 class = 'title'>
+        {{ post.title }}
+    </h1>
+    <hr>
+    <div class='img-container'> 
+        <h4>[ 이미지 ]</h4>
+        <div class="image-wrapper">
+            {% if post.img_src %}
+                <img id='image' src="{{ post.img_src.url }}" alt="" style="max-width: 100%; max-height: 100%;">
+            {% else%}
+                <div class='no-image'>
+                  <p id="no-image-text" class="hidden"><h4>첨부된 이미지가 없습니다.</h4></p>
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            <button id="toggle-button">접기</button>
+        </div>
+    </div>
+    <hr>
+    <div class='content-h4'>
+        <h4>[ 글 내용 ]</h4>
+    </div>
+    <div class="board-detail">
+        <pre name = "content" id="text" rows = "10" style="overflow: auto; word-wrap: break-word; resize: none; height: 500px; text-align: left; white-space: pre-wrap;">{{ post.content }}</pre>
+    </div>
+    <hr>
+
+    <form action = "{% url 'board:comment_create' post.id %}"method = "post">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div role = "alert">
+        {% for field in form %}
+            {% if field.errors %}
+            <strong>{{ field.label }}</strong>
+            {{ field.errors }}
+            {% endif %}
+        {% endfor %}
+        </div>
+        {% endif %}
+        <div id="form-commentInfo">
+            <div id="comment-count">
+                {% if post.comment_set.count == 0 %}
+                  <h4>댓글 0</h4>
+                {% else %}
+                  <h4>댓글 {{ post.comment_set.count }}</h4>
+                {% endif %}
+              </div>
+            <input name = "content" id="comment-input" placeholder="댓글을 입력해 주세요.">
+            <button id="submit">등록</button>
+        </div>
+    </form>
+    <div class='comment-container'>
+        {% for post in post.comment_set.all %}
+        <div id='comments'>
+            <p class='comment-user'><strong>User: {{ post.user_nickname }}</strong></p><br>
+            <a class='btn-del' href="{% url 'board:del_post_comment' comment_id=post.id%}">댓글삭제</a>
+            <p>{{ post.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <div class='save-location'>
+        <a class='btn-back' href="{% url 'board:post_fix' posts_id=post.id%}">수정</a>
+        <a class='btn-back' href="{% url 'board:del_post' posts_id=post.id%}">삭제</a>
+        <a class='btn-back' href="{% url 'board:posts'%}">뒤로가기</a>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('toggle-button');
+        const noImageText = document.getElementById('no-image-text');
+    
+        toggleButton.addEventListener('click', function() {
+            const imageWrapper = document.querySelector('.image-wrapper');
+    
+            if (imageWrapper) {
+                if (imageWrapper.classList.contains('hidden')) {
+                    imageWrapper.classList.remove('hidden');
+                    noImageText.classList.add('hidden');
+                    toggleButton.textContent = '접기';
+                } else {
+                    imageWrapper.classList.add('hidden');
+                    noImageText.classList.remove('hidden');
+                    toggleButton.textContent = '펼치기';
+                }
+            }
+        });
+    </script>
+{% endblock %}

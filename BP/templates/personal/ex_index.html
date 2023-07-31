@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/book.css' %}">
+    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
+    <script type="text/javascript" src="{% static 'js/book.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>
+    Personal Book Recommendation
+</h1>
+{% for ganre in ganres %}
+    <div class = 'ganre_box'>
+        <div class = 'title' onclick = "window.location = '{% url 'book:list' %}?search_query={{ganre.name}}';">
+            <div class = 'name'>
+                {{ganre.name}}
+            </div>
+            <div class = 'more'>
+                더 보기
+            </div>
+        </div>
+        <div class = 'books'>
+            {% for book in ganre.books %}
+                <div class = 'book_sticker' onclick = "extend({{book.id}})">
+                    <div class = 'book_pict'>
+                        <img src ="{{book.cover}}" alt = "이미지">
+                    </div>
+                    <div class = 'book_contents'>
+                        <div class = 'book_name'>
+                            {{book.title}}
+                        </div>
+                        <div class = 'book_auth'>
+                            {{ book.author_name }}
+                        </div>
+
+                        <div class = 'book_desc'>
+                            {{ book.description }}
+                            <a href="{% url 'book:detail'%}/{{book.id}}">
+                                자세히 보기 >>>>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+뒤에 블라블라
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+<script type="text/javascript" src="{% static 'js/user.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="email-img">
+    <img class='img' src="/static/images/email_img.png">
+</div>
+<div class="email-content">
+    <h2>
+        {{email}}<br>
+        이메일 인증이 완료되었습니다.
+        <br>
+    </h2>
+    <h3>
+        <br>
+        즐거운 책크미 되세요!
+    </h3>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/recommend.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>What U Want?</h1>
+</div>
+<div>
+    <p>
+        마음에 드는 그림을 선택하고, 자신에게 맞는 책을 추천받아보세요!
+    </p>
+</div>
+<div>
+    <button class = "button_1" type="button" onclick = "window.location='{% url 'recommend:loading' %}';">추천 받으러 가기</button>
+</div>
+{% endblock %}

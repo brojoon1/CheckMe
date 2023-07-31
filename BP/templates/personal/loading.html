@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/book.css' %}">
+    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
+    <script type="text/javascript" src="{% static 'js/book.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="bookshelf_wrapper">
+    <ul class="books_list">
+      <li class="book_item first"></li>
+      <li class="book_item second"></li>
+      <li class="book_item third"></li>
+      <li class="book_item fourth"></li>
+      <li class="book_item fifth"></li>
+      <li class="book_item sixth"></li>
+    </ul>
+    <div class="shelf"></div>
+</div>
+<div class='loading_content'>
+    <div>
+        <h3>AI가 지금 열심히 준비 중 이에요!</h3>
+    </div>
+    <div id = 'loadingText'>
+        <h3>Loading...</h3>
+    </div>
+</div>
+<input type='hidden' class = 'url' value = "{% url 'personal:index' %}">
+
+<script>
+    url = document.querySelector(".url").value
+    window.location=url
+    startLoading();
+    showLoading();
+</script>
+{% endblock %}

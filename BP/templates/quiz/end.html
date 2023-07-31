@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>Book Quiz 결과</h1>
+</div>
+<div style='margin:50px;'>
+    <h3>총 {{seq}}문제 중 {{score}}문제를 맞추셨습니다!</h3>
+    {% comment %} </p>
+        정확도 ~%
+    </p> {% endcomment %}
+</div>
+<div>
+    <button style='margin:50px;' class="button_1" type="button" onclick="window.location='{% url 'quiz:index' %}';">다시하기</button>
+</div>
+{% comment %} <div class = 'board'>
+    <h3>리더보드</h3>
+    상위 3등 & 본인 위아래 등수 2개씩? 보여주기
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Nickname</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+    </table>
+</div> {% endcomment %}
+{% endblock %}

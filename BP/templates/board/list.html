@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/board.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>자유게시판</h1>
+<div>
+<div id="free_board_btn_group">
+    <a id="board_btn1" href="{% url 'board:posts'%}">자유게시판</a>
+    <a id="board_btn3" href="{% url 'board:bookreports'%}">독후감게시판</a>
+</div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th style = "flex: 11;">Title</th>
+                <th>User</th>
+                <th style = "flex: 2;">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if posts_list %}
+                {% for post in posts_list%}
+                    <tr class="alert" role="alert" onclick = "window.location='{% url 'board:posts' %}{{post.id}}/';">
+                        <th class="centered-td" scope="row">{{ post.id }}</th>
+                        <td class="centered-td" style = "text-align: center; font-weight:bold; flex: 11;">{{ post.title }}</td>
+                        <td class="centered-td">{{post.user_nickname}}</td>
+                        <td class="centered-td" style = "flex: 2;">{{ post.comment_set.count }}</td>   
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <p>게시글이 없습니다.</p>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class='page-wrap'>
+    <!-- 페이징 처리 시작-->
+        <ul class='page-nation'>
+            <!-- 이전 페이지 -->
+            {% if posts_list.has_previous %}
+            <li>
+                <a href = "?page={{posts_list.previous_page_number}}"><<</a>
+            </li>
+            {% else %}
+            <li>
+                <a href = "#"><<</a>
+            </li>
+            {% endif %}
+            <!-- 페이지 리스트 -->
+            {% for page_number in posts_list.paginator.page_range %}
+            {% if page_number >= posts_list.number|add:-5 and page_number <= posts_list.number|add:5 %}
+                {% if page_number == posts_list.number %}
+                <li aria-current = "page">
+                    <a href = "?page={{ page_number }}">
+                        {{page_number}}
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href = "?page={{page_number}}">
+                        {{ page_number }}
+                    </a>
+                </li>
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- 다음 페이지 -->
+            {% if posts_list.has_next%}
+            <li>
+                <a href = "?page={{posts_list.next_page_number}}">>></a>
+            </li>
+            {% else %}
+            <li>
+                <a href = "#">>></a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징 처리 끝-->
+    </div>
+    <div class="btn-container">
+        <a class='btn' href = "{% url 'board:post_create' %}">
+            글쓰기
+        </a>
+    </div>
+    {% if error %}
+    <div class='error-message'>{{error}}</div>
+    {% endif %}
+{% endblock %}

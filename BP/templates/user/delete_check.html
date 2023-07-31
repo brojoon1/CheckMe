@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>회원 탈퇴</h1>
+<h3 style='margin:50px;' class='del'>정말로 탈퇴하시겠습니까?</h3>
+<div class='edit_btn'> 
+    <form action="{% url 'user:delete_real' %}" method="POST">
+        {% csrf_token %}
+        <div style="display: flex; justify-content: space-between;">
+            <button style='width:100px;margin-left:140px;' class="button_1 yn_btn" type="submit" >예</button>
+            <button style='width:100px;margin-right:140px;' class="button_1 yn_btn" type="button" onclick = "window.location='{% url 'user:mypage' %}';">아니오</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

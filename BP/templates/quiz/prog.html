@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+<script type="text/javascript" src="{% static 'js/quiz.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class = 'head'>
+        <h2>Book Quiz</h2>
+    </div>
+    <div class = 'head'>
+        <h1 style='margin-bottom:30px;' class = "count">1번 문제</h1>
+    </div>
+    <div class = 'pict_container'>
+        <img src ="" alt = "이미지">
+        <div class = 'hint' style="background-image: url()">
+        </div>
+    </div>
+    <div>
+        <p class = 'head' style='margin:20px;'>
+            Hint: 마우스 커서 움직임에 따라 원본 책 표지의 일부가 보여요!
+        </p>
+    </div>
+    <div class = 'ans_container' >
+
+        <div onclick = "select(1);">
+            <div style='font-weight:700;'>name</div>
+            <div>author</div>
+            <input type = 'hidden' class = 'point' value = "0">
+        </div>
+        <div onclick = "select(2);">
+            <div style='font-weight:700;'>name</div>
+            <div>author</div>
+            <input type = 'hidden' class = 'point' value = "0">
+        </div>
+        <div onclick = "select(3);">
+            <div style='font-weight:700;'>name</div>
+            <div>author</div>
+            <input type = 'hidden' class = 'point' value = "0">
+        </div>
+        <div onclick = "select(4);">
+            <div style='font-weight:700;'>name</div>
+            <div>author</div>
+            <input type = 'hidden' class = 'point' value = "0">
+        </div>
+    </div>
+
+    
+    <form method="post" class = 'next' action="{% url 'quiz:end' %}" entype="application/x-www-form-urlencoded">
+        {% csrf_token %}
+        <input type = "hidden" class = "win_total" name = "win_total">
+        <input type = "hidden" class = "win_point" name = "win_point">
+    </form>
+
+    {% for quest in quests %}
+        <div class = 'from_db'>
+            <input type="hidden" class = "quest_img"  value = "{{quest.quest_img}}">
+            <input type="hidden" class = "hint_img" value = "{{quest.hint_img}}">
+            
+            {% for ans in quest.anss %}
+            <div class = 'anss'>
+                <input type="hidden" class = "ans" value = "{{ans.name}}">
+                <input type="hidden" class = "ans" value = "{{ans.author}}">
+                <input type="hidden" class = "ans" value = "{{ans.point}}">
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+    <script type="text/javascript">
+        start()
+    </script>
+{% endblock %}

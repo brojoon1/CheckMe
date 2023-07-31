@@ -1,0 +1,225 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+    
+{% block content %}
+<div class='cover-wrap'>
+    <img src="/static/images/cover.png">
+    <h2>"{{count}} 명이 선택한"</h2>
+    <h1>CheckMe</h1>
+    <h3><span class="highlight_ai">AI </span>가 찾아주는 나만의 책<br><span class="highlight">책</span>크미가 당신의 책을 찾아드립니다</h3>
+    <button id='cover-button'><a href="#cover-bottom"><img class='down_sign' src="/static/images/cover_down_sign.png" style="background-color: transparent;"></a></button>
+</div>
+
+<div id='cover-bottom'>
+    <p class='cover-bottom'>　</p>
+</div>
+
+<div class='book_ani'>
+
+    <div class = 'funcsticker' onclick = "window.location='{% url 'personal:loading' %}';">
+
+        <figure class='book'>        
+            <!-- Front -->        
+            <ul class='hardcover_front'>
+            <li>
+                <h1>Personal Book</h1>
+            </li>
+            <li></li>
+            </ul>        
+            <!-- Pages -->        
+            <ul class='page'>
+            <li></li>
+            <li>
+                <a class="btn" onclick = "window.location='{% url 'personal:loading' %}';">Start</a>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            </ul>        
+            <!-- Back -->        
+            <ul class='hardcover_back'>
+            <li></li>
+            <li></li>
+            </ul>
+            <ul class='book_spine'>
+            <li></li>
+            <li></li>
+            </ul>
+        </figure>
+    </div>  
+
+    <div class = 'funcsticker' onclick = "window.location='{% url 'recommend:index' %}';">
+        <figure class='book'>        
+            <!-- Front -->        
+            <ul class='hardcover_front'>
+            <li>
+                <h1>What U Want?</h1>
+            </li>
+            <li></li>
+            </ul>        
+            <!-- Pages -->        
+            <ul class='page'>
+            <li></li>
+            <li>
+                <a class="btn" onclick = "window.location='{% url 'recommend:index' %}';">Start</a>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            </ul>        
+            <!-- Back -->        
+            <ul class='hardcover_back'>
+            <li></li>
+            <li></li>
+            </ul>
+            <ul class='book_spine'>
+            <li></li>
+            <li></li>
+            </ul>
+        </figure>
+    </div>
+
+
+    <div class = 'funcsticker' onclick = "window.location='{% url 'quiz:index' %}';">
+        <figure class='book'>        
+            <!-- Front -->        
+            <ul class='hardcover_front'>
+            <li>
+                <h1>Book Quiz</h1>
+            </li>
+            <li></li>
+            </ul>        
+            <!-- Pages -->        
+            <ul class='page'>
+            <li></li>
+            <li>
+                <a class="btn" onclick = "window.location='{% url 'quiz:index' %}';">Start</a><br>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            </ul>        
+            <!-- Back -->        
+            <ul class='hardcover_back'>
+            <li></li>
+            <li></li>
+            </ul>
+            <ul class='book_spine'>
+            <li></li>
+            <li></li>
+            </ul>
+        </figure>
+    </div>
+        
+    <div class='btn-move'>
+        <button id='scrollButton1'><a href="#intro_des1"><h3>설명보기</h3><br><img class='down_sign' src="/static/images/cover_down_sign.png" style="background-color: transparent;"></a></button>
+        
+    </div>
+</div>
+<br>
+
+<div class='intro'>
+    <div class='intro_box'>
+        <div class='intro_icon' id ='go_des'>
+            <h1>Personal Book</h1>
+            <h3 style='margin:25px;'>나에게 맞는 책을 추천받아요!</h3>
+            <img src="{% static 'images/img_02.png' %}" alt='로드 실패' width="120" height="120">
+        </div>
+
+        <div class='intro_des' id='intro_des'>
+            <div>
+                <h3>나에게 어울리는 퍼스널 북을 추천해드립니다.</h3>
+            </div>
+            <div>
+                내가 좋아하는 장르들의 책은 어떤 것들이 있는지 궁금하지 않으신가요?<br>
+                회원가입을 하고 나서 내가 선택한 장르들의 책들을 AI를 통해 추천해드려요!
+            </div>
+        </div>
+    </div>
+
+    <div class='intro_box'>
+        <div class='intro_des' id='intro_des'>
+            <div>
+                <h3>내가 보고 싶은 책은 뭘까? 다양한 장르의 책들을 추천받아 보세요!</h3>
+            </div>
+            <div>
+                책 내용을 Text to Image AI를 통해 생성된 이미지는<br> 각 장르별 도서들의 특징을 담고 있습니다.<br>
+                총 52개의 생성된 이미지로 토너먼트를 진행해보세요!<br>
+                토너먼트를 마치고 나면 내가 좋아할만한 책들이 추천됩니다!
+            </div>
+        </div>
+
+        <div class='intro_icon'>
+            <h1>What U Want?</h1>
+            <h3 style='margin:25px;'>나에게 맞는 다른 책들을 찾아보세요!</h3>
+            <img src="{% static 'images/img_01.png' %}" alt='로드 실패' width="120" height="120">
+        </div>
+    </div>
+
+    <div class='intro_box'>
+        <div class='intro_icon'>
+            <h1>Book Quiz</h1>
+            <h3 style='margin:25px;'>책의 특징으로 만들어진 이미지를 보고<br> 책의 제목을 맞추어보세요!</h3>
+            <img src="{% static 'images/img_03.png' %}" alt='로드 실패' width="100" height="100">
+        </div>
+
+        <div class='intro_des' id='intro_des'>
+            <div>
+                <h3>나를 맞춰봐!</h3>
+            </div>
+            <div>
+                책의 내용, 제목, 장르등 책의 특징을 기반으로<br> Text to Image AI를 통해 생성된 이미지를 보고<br> 책 제목을 맞춰보세요!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        var introDes1 = document.getElementById('go_des');
+        var scrollButton1 = document.getElementById('scrollButton1');
+
+        // 버튼 클릭 시 introDes1로 스크롤
+        scrollButton1.addEventListener('click', function(e) {
+            e.preventDefault();
+            introDes1.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    };
+</script>
+
+<script>
+    window.onload = function() {
+        var go_des = document.getElementById('go_des');
+        var scrollButton1 = document.getElementById('scrollButton1');
+
+        var cover_bottom = document.getElementById('cover-bottom');
+        var cover_button = document.getElementById('cover-button');
+
+        // 버튼 클릭 시 go_des로 스크롤
+        scrollButton1.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            go_des.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }); 
+
+        // 버튼 클릭 시 cover-bottom로 스크롤
+        cover_button.addEventListener('click', function(e) {
+            e.preventDefault();
+            cover_bottom.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }); 
+    };
+</script>
+
+{% endblock %}

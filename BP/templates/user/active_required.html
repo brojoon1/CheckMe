@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+<script type="text/javascript" src="{% static 'js/user.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="email-img">
+    <img class='img' src="/static/images/email_img.png">
+</div>
+<div class="email-content">
+    <h2>
+        {{email}}<br>
+        인증 메일이 발송되었습니다.
+        <br>
+        인증을 완료해주세요.
+    </h2>
+    <h3>
+        <br>
+        인증 전까지 계정은 비활성화 됩니다.
+    </h3>
+</div>
+{% endblock %}

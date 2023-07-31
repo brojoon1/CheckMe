@@ -1,0 +1,140 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/recommend.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class = 'pict_comp'>
+    <div class = 'after'>
+        <h4>생성 이미지</h4>
+        <img src = "/static/gen_imgs/img_{{isbn}}.png">
+    </div>
+    <div class='left-pointer-img-container'>
+        <img class='left-pointer-img' src = "https://cdn-icons-png.flaticon.com/512/6364/6364354.png" alt = "">
+    </div>
+    <div class = 'before'>
+        <h4>원본 이미지</h4>
+        <img src = "{{ img }}" alt = "">
+    </div>
+    <p><h4>{{title}}</h4></p>
+</div>
+
+<div>
+    <button class = "button_1" type="button" onclick = "window.location='{% url 'recommend:index' %}';">다시하기</button>
+</div>
+<div class='ai-recommend-title'>
+    <div class='ai_content'>
+        <h3>
+            AI추천
+        </h3>
+    </div>
+</div>
+<div class = 'ai-recommend'>
+    <div class="genre">
+        <div class = "ai_genre_title">
+            <h3>AI 비슷한 장르 추천</h3>
+        </div>
+        <div class = 'books'>
+            {% for book in rg %}
+            <!-- {{book}} 선택된 책들 -->
+            <div class = 'book_sticker' >
+                <div class = 'book_pict' >
+                    <img src ="{{book.cover}}" alt = "이미지">
+                </div>
+
+                <div class = 'book_contents'>
+                    <div class = 'book_name'>
+                        <h4>{{book.title}}</h4>
+                    </div>
+
+                    <div class = 'book_auth'>
+                        {{ book.authorName }}
+                    </div>
+                    <div class = 'book_link'>
+                        <a href="{% url 'book:detail'%}/{{book.isbn13}}">
+                        < 자세히 보기 >
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- book sticker 종료 -->
+            {% endfor %}
+        </div>
+    </div>
+    <div class="story">
+        <div class = "ai_genre_title">
+            <h3>AI 비슷한 줄거리 추천</h3>
+        </div>
+        <div class = 'books'>
+            {% for book in kr %}
+            <!-- {{book}} 선택된 책들 -->
+            <div class = 'book_sticker' >
+                <div class = 'book_pict' >
+                    <img src ="{{book.cover}}" alt = "이미지">
+                </div>
+
+                <div class = 'book_contents'>
+                    <div class = 'book_name'>
+                        <h4>{{book.title}}</h4>
+                    </div>
+
+                    <div class = 'book_auth'>
+                        {{ book.authorName }}
+                    </div>
+                    <div class = 'book_link'>
+                        <a href="{% url 'book:detail'%}/{{book.isbn13}}">
+                        < 자세히 보기 >
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- book sticker 종료 -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class='ai-recommend-title'>
+    <div class='ai_content'>
+        <h3>
+            기타 추천
+        </h3>
+    </div>
+</div>
+<div class="author">
+    <div class = "ai_genre_title">
+        <h3>같은 작가가 쓴 다른 도서 목록</h3>
+    </div>
+    <div class = 'books'>
+        {% for book in ra %}
+        <!-- {{book}} 선택된 책들 -->
+        <div class = 'book_sticker' >
+            <div class = 'book_pict' >
+                <img src ="{{book.cover}}" alt = "이미지">
+            </div>
+
+            <div class = 'book_contents'>
+                <div class = 'book_name'>
+                    <h4>{{book.title}}</h4>
+                </div>
+
+                <div class = 'book_auth'>
+                    {{ book.authorName }}
+                </div>
+                <div class = 'book_link'>
+                    <a href="{% url 'book:detail'%}/{{book.isbn13}}">
+                    < 자세히 보기 >
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- book sticker 종료 -->
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

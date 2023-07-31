@@ -1,0 +1,38 @@
+<input class = 'count' value = "{{count}}">
+{% for book in books %}
+<div class = 'child_books'>
+    <input class = 'cover' value = "{{book.cover}}">
+    <input class = 'title' value = "{{book.title}}">
+    <input class = 'author' value = "{{book.author_name}}">
+    <input class = 'desc' value = "{{book.description}}">
+    <!-- 
+    <input class = 'desc' value = "{{book.desc}}"> 
+    -->
+    <input class = 'url' value = "{% url 'book:detail'%}/{{book.isbn13}}">
+</div>
+{% endfor %}
+<script type="text/javascript">
+    count = document.querySelector(".count").value * 1;
+    books = document.querySelectorAll('.child_books');
+
+    for(var i = 0 ; i < books.length ; i++){
+        cover = books[i].querySelector(".cover").value;
+        title = books[i].querySelector(".title").value;
+        author = books[i].querySelector(".author").value;
+        desc = books[i].querySelector(".desc").value;
+        url = books[i].querySelector(".url").value;
+
+        obj = [
+            'add',
+            cover,
+            title,
+            author,
+            desc,
+            url,
+            i + 1 + count,
+        ]
+        obj = JSON.parse(JSON.stringify(obj));
+        parent.postMessage(obj,  '*');
+    }
+    parent.postMessage(['kill'],  '*');
+</script>

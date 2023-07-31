@@ -1,0 +1,303 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/board.css' %}">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+{% endblock %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+      $(document).ready(function() {
+      var searchXHR;
+      var loadingText = $('#loading');
+      var loadingInterval;
+      var selectedDiv = null;
+      var previousQuery = ''; // 이전 검색어를 저장하기 위한 변수
+      
+      // 검색어 입력 필드 이벤트 처리
+      $('#book').on('input', function() {
+         var query = $(this).val();
+
+         if (searchXHR && searchXHR.readyState !== 4) {
+            searchXHR.abort();
+         }
+
+         searchXHR = $.ajax({
+            url: 'search/',
+            method: 'GET',
+            data: {
+            query: query
+            },
+            beforeSend: function() {
+            loadingText.text('loading..');
+            loadingInterval = setInterval(function() {
+               var text = loadingText.text();
+               loadingText.text(text + '.');
+            }, 1000);
+            },
+            success: function(response) {
+            var searchResults = response.results;
+            var resultsContainer = $('#searchResults');
+
+            resultsContainer.empty();
+
+            if (searchResults.length > 0) {
+               $.each(searchResults, function(index, result) {
+                  var resultItem = $('<div>').text(result).addClass('result-item');
+
+                  resultItem.on('click', function() {
+                  if (selectedDiv) {
+                     selectedDiv.css('background-color', '');
+                  }
+
+                  selectedDiv = $(this);
+
+                  $('.result-item').removeClass('selected');
+                  $(this).addClass('selected');
+                  $('#book').val(result);
+                  $('#selectedResultInput').val(result);
+
+                  $(this).css('background-color', '#e6dab4');
+                  });
+
+                  resultsContainer.append(resultItem);
+               });
+
+               resultsContainer.show();
+            } else {
+               var noResults = $('<div>').text('No results found');
+               resultsContainer.append(noResults); 
+               resultsContainer.hide();
+            }
+            },
+            complete: function() {
+            clearInterval(loadingInterval);
+            loadingText.text('');
+            },
+            error: function(xhr, status, error) {
+            console.log(error);
+            }
+         });
+      });
+
+      $('#searchResults').on('click', 'div', function() {
+         if (selectedDiv) {
+            selectedDiv.css('background-color', '');
+         }
+
+         selectedDiv = $(this);
+
+         $('.result-item').removeClass('selected');
+         $(this).addClass('selected');
+
+         $(this).css('background-color', '#e6dab4');
+      });
+
+      $('#bookSearchForm').submit(function(event) {
+         event.preventDefault();
+
+         var formData = new FormData(this);
+         var selectedBook = $('#book').val();
+
+         formData.append('selected_book', selectedBook);
+
+         $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+            // 서버 응답 처리
+            },
+            error: function(xhr, status, error) {
+            console.log(error);
+            }
+         });
+      });
+      // 초기화 버튼 클릭 이벤트 처리
+      $('#resetButton').click(function() {
+         $('#book').val('');
+         $('#searchResults').hide();
+         return false;
+      });
+      // 엔터키 제출 이벤트 처리
+      $('#book').on('keydown', function(event) {
+         if (event.which === 13) {
+            event.preventDefault();
+            return false;
+         }
+      });
+      // 이전 검색어를 입력 필드에 할당
+      $('#book').val(previousQuery);
+      });
+   </script>
+
+  
+    <h1>독후감 작성</h1>
+<div id="wrapper">
+    <form id="paper" method = "post" enctype="multipart/form-data"> <!-- 전송 방식 : post-->
+        {% csrf_token %}
+        
+        <!-- 오류 표시 시작-->
+        {% if form.errors %}
+            <div role = "alert">
+            {% for field in form %}
+                {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        <!-- 오류 표시 종료-->
+        <!-- form -->
+        <div class = 'input_divs'>
+            <input type = "text" name = "title" class='input_1' placeholder="글 제목" value = "{{ form.title.value|default_if_none:''}}">
+        </div>
+        <!-- 책 실시간 검색 기능-->
+        <div class='book-search-location'>
+            <input type="text" name="book" id="book" class="bookSearch input_1" placeholder="책 제목 검색" autocomplete="off" value = "{{ form.book.value|default_if_none:''}}">
+            <button class="resetButton" id="resetButton">검색 초기화</button>
+            <p type="textarea" class="confirm-btn">확인</p>
+        </div>
+        <div id="searchResults"> 
+        </div> 
+        <div class='book-search-result' id="loading"> </div>
+        <div>
+            <textarea placeholder="내용을 작성해 주세요." name = "content" id="text" rows = "10" style="overflow: auto; word-wrap: break-word; resize: none; height: 500px; ">{{ form.content.value|default_if_none:''}}</textarea>
+        </div>
+        <br>
+        <div class="container">
+            <label class="label" id="label" for="input">
+               <div class="inner" id="inner">Drag or Click for Upload</div>
+            </label>
+            <input id="input" class="input" name = 'img_src' accept="image/*" type="file" multiple="true" hidden="true">
+            <p class="preview-title">preview</p>
+            <div class="preview" id="preview"></div>
+        </div>
+        <hr>
+        <br>
+        <div class='save-location'>
+        <!-- {{ form.as_p }} 오류 표시 추가 하면서 수정--> 
+        <a class='btn-back' href="{% url 'board:bookreports'%}">뒤로가기</a>
+        <button type= "submit">저장하기</button>
+        </div>
+    </form>
+</div>
+
+
+ 
+ <script>
+    var input = document.getElementById("input");
+    var initLabel = document.getElementById("label");
+ 
+    input.addEventListener("change", (event) => {
+       const files = changeEvent(event);
+       handleUpdate(files);
+    });
+ 
+    initLabel.addEventListener("mouseover", (event) => {
+       event.preventDefault();
+       const label = document.getElementById("label");
+       label?.classList.add("label--hover");
+    });
+ 
+    initLabel.addEventListener("mouseout", (event) => {
+       event.preventDefault();
+       const label = document.getElementById("label");
+       label?.classList.remove("label--hover");
+    });
+ 
+    document.addEventListener("dragenter", (event) => {
+       event.preventDefault();
+       console.log("dragenter");
+       if (event.target.className === "inner") {
+          event.target.style.background = "#616161";
+       }
+    });
+ 
+    document.addEventListener("dragover", (event) => {
+       console.log("dragover");
+       event.preventDefault();
+    });
+ 
+    document.addEventListener("dragleave", (event) => {
+       event.preventDefault();
+       console.log("dragleave");
+       if (event.target.className === "inner") {
+          event.target.style.background = "#3a3a3a";
+       }
+    });
+ 
+    document.addEventListener("drop", (event) => {
+       event.preventDefault();
+       console.log("drop");
+       if (event.target.className === "inner") {
+          const files = event.dataTransfer?.files;
+          event.target.style.background = "#3a3a3a";
+          handleUpdate([...files]);
+       }
+    });
+ 
+    function changeEvent(event) {
+       const { target } = event;
+       return [...target.files];
+    };
+ 
+    function handleUpdate(fileList) {
+       const preview = document.getElementById("preview");
+ 
+       fileList.forEach((file) => {
+          const reader = new FileReader();
+          reader.addEventListener("load", (event) => {
+             const img = el("img", {
+                className: "embed-img",
+                src: event.target?.result,
+             });
+             const imgContainer = el("div", { className: "container-img" }, img);
+             preview.append(imgContainer);
+          });
+          reader.readAsDataURL(file);
+       });
+    };
+ 
+    function el(nodeName, attributes, ...children) {
+       const node =
+          nodeName === "fragment"
+             ? document.createDocumentFragment()
+             : document.createElement(nodeName);
+ 
+       Object.entries(attributes).forEach(([key, value]) => {
+          if (key === "events") {
+             Object.entries(value).forEach(([type, listener]) => {
+                node.addEventListener(type, listener);
+             });
+          } else if (key in node) {
+             try {
+                node[key] = value;
+             } catch (err) {
+                node.setAttribute(key, value);
+             }
+          } else {
+             node.setAttribute(key, value);
+          }
+       });
+ 
+       children.forEach((childNode) => {
+          if (typeof childNode === "string") {
+             node.appendChild(document.createTextNode(childNode));
+          } else {
+             node.appendChild(childNode);
+          }
+       });
+ 
+       return node;
+    }
+ </script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+{% block content %}
+<h1>회원 정보</h1>
+<div class='userbox'>
+<div class = 'first'><label>Name</label></div><div>{{user.name}}</div>
+</div>
+<div class='userbox'>
+    <div class = 'first'><label>Nickname</label></div><div>{{user.nickname}}</div>
+</div>
+<div class='userbox'>
+    <div class = 'first'><label>ID</label></div><div>{{user.username}}</div>
+</div>
+<div class='userbox'>
+    <div class = 'first'><label>Email</label></div><div>{{user.email}}</div>
+</div>
+<div class='userbox'>
+    <div class = 'first'><label>Phone</label></div><div>{{user.phone}}</div>
+</div>
+
+    {% if user.is_authenticated %}
+    <div class = 'submit' style='margin-left:40px;margin-top:40px;'>
+        <form action="{% url 'user:edit' %}" method="POST">
+            {% csrf_token %}
+            <button class = "button_1" type="submit">정보수정</button>
+        </form> 
+        <form action="{% url 'user:change_password' %}" method="POST">
+            {% csrf_token %}
+            <button class = "button_1" type="submit" >PW수정</button>
+        </form> 
+        <form action="{% url 'user:select' %}" method="GET">
+            {% csrf_token %}
+            <button class = "button_1" type="submit" >장르변경</button>
+        </form>
+
+        <form action="{% url 'user:delete_check' %}" method="POST">
+            {% csrf_token %}
+            <button class = "button_1" type="submit" >회원탈퇴</button>
+        </form>
+
+        
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

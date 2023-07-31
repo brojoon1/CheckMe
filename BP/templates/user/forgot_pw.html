@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>비밀번호 변경</h1>
+
+<form method="post" action="{% url 'user:forgot_pw' %}" entype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <div class="input_divs">
+        <input type="text" class="input_1" 
+            name="username" id="username" placeholder= "ID" value="{{ form.username.value|default_if_none:""}}">
+    </div>
+    {% if error %}
+    <div class="error_message">{{ error }}</div>
+    {% endif %}
+    <div class='innerdiv' id='weight3'>
+        <button style='width:100px;margin-top:50px;' class="button_1" type="submit">확인</button>
+    </div>
+    <button style='width:100px;margin-top:50px;' class="button_1" type="button" onclick="window.location='{% url 'user:login' %}';">취소</button>
+</form>
+
+{% comment %} <small>발급받은 아이디를 공백 없이 정확하게 입력해주세요.</small> {% endcomment %}
+
+{% comment %} <div class="input_divs">
+    <div class="innerdiv" id="weight5">
+        <input type="text" class="input_1" placeholder= "email" name="email_front">
+    </div>
+    <div class="innerdiv" id="weight1">
+        @
+    </div>
+    <div class="field-wrapper">
+        {{ form.custom_domain }} {{ form.domain_choice }}
+    </div>
+</div>
+
+{% if form.errors.email %}
+<div class="error_message">{{ form.errors.email }}</div>
+{% endif %}
+
+<script>
+    // 도메인 선택 시 custom_domain 필드 업데이트
+    document.getElementById("id_domain_choice").addEventListener("change", function() {
+        var domainChoice = this.value;
+        if (domainChoice === "custom") {
+            document.getElementById("id_custom_domain").disabled = false;
+            document.getElementById("id_custom_domain").value = "";
+        } else {
+            document.getElementById("id_custom_domain").disabled = true;
+            document.getElementById("id_custom_domain").value = domainChoice;
+        }
+    });
+</script> {% endcomment %}
+
+<br>
+가입 시 작성하신 이메일 주소로 해당 아이디의 비밀번호 변경 링크가 전송됩니다.
+<br>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,315 @@
+/* 주석, List 전용 */
+.book_sticker{
+    display: inline-block;
+    width: 230px;
+    height: 430px;
+    margin: 30px;
+    margin-bottom: 10px;
+    border: 3px solid #c0c0c0;
+    border-radius: 30px;
+    background-color: #ebe4cd;
+    transition: width 0.2s, height 0.2s, box-shadow 0.2s, margin 0.2s, position 0.2s;
+    vertical-align: text-top;
+}
+.book_sticker>div{
+    display: inline-block;
+}
+.book_pict, .book_desc{
+    margin: 0px;
+    box-shadow: 0px 0px 0px gray;
+}
+.book_pict{
+    margin: 0px;
+    width: 230px;
+    height: 320px;
+    /* background-color: #c0c0c0; */
+    transition: 0.2s;
+    vertical-align: top;
+}
+.book_pict img{
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    /* background-color: #c0c0c0; */
+    transition: 0.2s;
+}
+.book_sticker:hover .book_pict>img{
+    margin: -7px -5px -7px -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 14px);
+    box-shadow: 0px 10px 7px gray;
+}
+.book_contents{
+    margin: 0px;
+    width: calc(100% - 311px);
+    min-width: 230px;
+}
+.book_sticker:hover .book_desc{
+    padding-bottom: 21px;
+}
+.book_desc{
+    display: none;
+    overflow: hidden;
+    height: 0px;
+    transition: height 0.2s, padding 0.2s;
+}
+.book_name, .book_auth{
+    height: 40px;
+    padding-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book_name {
+    font-weight: 700;
+}
+
+
+/* 주석, detail 의 list 전용 */
+.ai-recommend .books, .author .books{
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.ai-recommend .book_sticker, .author .book_sticker{
+    display: inline-block;
+    width: 240px;
+    /* height: 440px; */
+    margin: 30px;
+    margin-bottom: 20px;
+    /* border: 3px solid #c7c6c5; */
+    border: 3px solid #dedcdc;
+    transition: width 0.2s, height 0.2s, box-shadow 0.2s, margin 0.2s, position 0.2s;
+    vertical-align: text-top;
+    justify-content: center;
+    background-color: #ebe4cd;
+    border-radius: 30px;
+}
+.ai-recommend .book_sticker > div, .author .book_sticker > div{
+    display: block;
+}
+.ai-recommend .book_pict, .author .book_pict{
+    margin: 0px;
+    width: 240px;
+    height: 320px;
+    background-color: rgb(235, 228, 205);
+    transition: width 0.2s, height 0.2s, box-shadow 0.2s, padding 0.2s;
+    border-radius: 28px;
+}
+
+.ai-recommend .book_pict img, .author .book_pict img{
+    width: 100%;
+    height: 100%;
+    transition: width 0.2s, height 0.2s, box-shadow 0.2s, margin 0.2s;
+}
+
+  
+.ai-recommend .book_contents, .author .book_contents{
+    margin: 0px;
+    width: calc(100% - 326px);
+    min-width: 240px;
+}
+
+.ai-recommend .book_name, .author .book_name{
+    text-align: center;
+    padding-top: 10px;
+    /* padding-left: 10px; */
+    height: 30px;
+    overflow: hidden;
+}
+
+.ai-recommend .book_auth, .author .book_auth{
+    text-align: center;
+    height: 20px;
+    padding-bottom: 10px;
+}
+
+.ai-recommend .book_link, .author .book_link{
+    text-align: center;
+    height: 20px;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+
+/* 주석, detail 전용 */
+.picture_cont{
+    /* width: calc(50% - 10px); */
+    /* height: 70%; */
+    width: 460px;
+    height: 540px;
+    /* border-radius: 30px; */
+    box-shadow: 7px 15px 15px gray;
+    display: inline-block;
+    background-color: #ebe4cd;
+    vertical-align: top;
+}
+.info_cont{
+    /* width: calc(50% - 10px); */
+    height: 540px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 30px;
+}
+
+button.input_1 {
+    background-color: #ebe4cd;
+    color: #000;
+    height: 50px;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background-color .2s;
+    letter-spacing: .06em;
+    cursor: pointer;
+    border: 3px solid #c0c0c0;
+    border-radius: 30px;
+}
+
+button:hover{
+    background-color: #c0c0c0;
+    color: #fff;
+}
+
+.input_1{
+    border: 3px solid #c0c0c0;
+    border-radius: 30px;
+    height: 50px;
+    width: 100%;
+    padding: 15px;
+    font-size: 15px;
+}
+
+input.input_1{
+    padding-left: 20px;
+}
+
+.button_1{
+    /* background-color: rgba(129, 193, 71, 0); */
+    border: 2px solid #c0c0c0;
+    border-radius: 5px;
+    font-weight: 700;
+    height: 50px;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.input_divs{
+    display: flex;
+    margin: 5px;
+    margin-left: calc(50% - 225px);
+    width: 450px;
+}
+.innerdiv{
+    display: inline-block;
+    text-align: center;
+    flex-basis: 450px;
+    padding: 0px;
+}
+#weight1{
+    flex: 1;
+}
+#weight3{
+    flex: 3;
+}
+#weight5{
+    flex: 5;
+}
+#weight11{
+    flex: 11;
+}
+
+.info_box {
+    margin: 30px;
+    padding: 40px;
+    border: 3px solid #e0e0e0;
+    border-radius: 30px;
+    background-color: #ede4cd;
+}
+
+div.line {
+    margin: 20px 50px 20px 50px;
+}
+
+.box_title {
+    height: 132px;
+    overflow: hidden;
+    margin: 10px 50px 10px 50px;
+    font-weight: 700;
+}
+
+.info_head {
+    width: 450px;
+}
+
+.cat_box {
+    margin: 20px;
+}
+
+.dt_btn {
+    width: 250px;
+}
+
+.cont_head {
+    width: 1000px;
+    padding: 20px 0px 50px 0px;
+}
+
+
+#search{
+    display: inline-block;
+}
+#search>.search_input{
+    width: 350px;
+    color: #000;
+    padding: 7px;
+    padding-left: 20px;
+    height: 40px;
+    margin: 0px;
+    margin-top: 1px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-right: -7px;
+    border: 3px solid #c0c0c0;
+    border-radius: 30px 0px 0px 30px;
+}
+
+#search>.search_button{
+    background-color: #ebe4cd;
+    color: #000;
+    padding: 7px;
+    height: 40px;
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background-color .2s;
+    letter-spacing: .06em;
+    cursor: pointer;
+    border: 3px solid #c0c0c0;
+    border-radius: 0px 30px 30px 0px;
+}
+#search>.search_button:hover{
+    background-color: #c0c0c0;
+    color: #fff;
+}
+
+/* 스크롤바 커스텀 */
+.books::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  .books::-webkit-scrollbar-thumb {
+    background-color: #FDD692;
+    border-radius: 10px;
+  }
+  
+  .books::-webkit-scrollbar-track {
+    background-color: rgb(202, 202, 202);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #e9d9A7;
+  }
+
+  

@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/recommend.css' %}">
+<script type="text/javascript" src="{% static 'js/recommend.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class = 'head'>
+        <h2>What U Want?</h2>
+    </div>
+
+    <div class = 'head'>
+        <h1 class = 'count'>
+            1번 선택지
+        </h1>
+    </div>
+
+    <div class = 'max'>    
+        <div class = 'current'>
+        </div>
+    </div>
+    <div class = 'ganre_container' >
+        <div onclick = "select(1);">
+            <img src ="" alt = "이미지" class = "img">
+            <input type="hidden" class = "name" value = "">
+            <input type="hidden" class = "keyword"  value = "">
+            <input type="hidden" class = "isbn"  value = "">
+        </div>
+
+        <div onclick = "select(2);">
+            <img src ="" alt = "이미지" class = "img">
+            <input type="hidden" class = "name" value = "">
+            <input type="hidden" class = "keyword"  value = "">
+            <input type="hidden" class = "isbn"  value = "">
+        </div>
+
+        <div onclick = "select(3);">
+            <img src ="" alt = "이미지" class = "img">
+            <input type="hidden" class = "name" value = "">
+            <input type="hidden" class = "keyword"  value = "">
+            <input type="hidden" class = "isbn"  value = "">
+        </div>
+
+        <div onclick = "select(4);">
+            <img src ="" alt = "이미지" class = "img">
+            <input type="hidden" class = "name" value = "">
+            <input type="hidden" class = "keyword"  value = "">
+            <input type="hidden" class = "isbn"  value = "">
+        </div>
+
+        <form method="post" name="registerForm" onsubmit="return validateForm()" action="{% url 'recommend:end' %}" entype="application/x-www-form-urlencoded">
+            {% csrf_token %}
+            <input type = "hidden" class = "selected_name" name = "name">
+            <input type = "hidden" class = "selected_keyword" name = "keyword">
+            <input type = "hidden" class = "selected_isbn" name = "isbn">
+        </form>
+
+    </div>
+
+    {% for genre in genres %}
+        <div class = 'from_db'>
+            <input type="hidden" class = "img"  value = "/static/gen_imgs/img_{{genre.isbn}}.png">
+            <input type="hidden" class = "name" value = "{{genre.name}}">
+            <input type="hidden" class = "keyword"  value = "{{genre.keyword}}">
+            <input type="hidden" class = "isbn"  value = "{{genre.isbn}}">
+        </div>
+    {% endfor %}
+    <script type="text/javascript">
+        start()
+    </script>
+{% endblock %}

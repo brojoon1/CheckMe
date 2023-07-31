@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class='intro' style='margin-top:-80px;'>
+
+    <h1 class='about_title'>About CheckMe </h1>
+    <h3 style='margin-bottom:120px;'>나에게 맞는 책의 취향을 Check!<br> 
+    CheckMe는 나의 취향에 맞는 책들을 추천해주는 도서 추천 웹 서비스 입니다.</h3>
+    
+    <div class='intro_box'>
+        <div class='intro_icon' id ='go_des'>
+            <h1>Personal Book</h1>
+            <h3 style='margin:25px;'>나에게 맞는 책을 추천받아요!</h3>
+            <img src="{% static 'images/img_02.png' %}" alt='로드 실패' width="120" height="120">
+        </div>
+
+        <div class='intro_des'>
+            <div>
+                <h3>나에게 어울리는 컬러가 있다면<br> 나에게 어울리는 책도 있지 않을까?</h3>
+            </div>
+            <div>
+                내가 좋아하는 장르들의 책은 어떤 것들이 있는지<br> 궁금하지 않으신가요?<br>
+                좋아하는 장르들의 다양한 책들을 AI를 통해 추천해드려요!<br>
+            </div>
+        </div>
+    </div>
+
+    <div class='intro_box'>
+        <div class='intro_des'>
+            <div>
+                <h3>지금 먹고 싶은 음식도 계속 바뀌는데,<br> 내가 보고 싶은 책도 바뀌지 않을까?</h3>
+            </div>
+            <div>
+                책 내용을 Text to Image AI를 통해 생성된 이미지는<br> 각 장르별 도서들의 특징을 담고 있습니다.<br>
+                총 52개의 생성된 이미지로<br> 토너먼트를 진행해보세요!<br>
+                토너먼트를 마치고 나면 내가 좋아할만한 책들이 추천됩니다!
+            </div>
+        </div>
+
+        <div class='intro_icon'>
+            <h1>내 책 추</h1>
+            <h3 style='margin:25px;'>나에게 맞는 다른 책들을 찾아보세요!</h3>
+            <img src="{% static 'images/img_01.png' %}" alt='로드 실패' width="120" height="120">
+        </div>
+    </div>
+
+    <div class='intro_box'>
+        <div class='intro_icon'>
+            <h1>Book Quiz</h1>
+            <h3 style='margin:25px;'>책의 특징으로 만들어진 이미지를 보고<br> 책의 제목을 맞추어보세요!</h3>
+            <img src="{% static 'images/img_03.png' %}" alt='로드 실패' width="100" height="100">
+        </div>
+
+        <div class='intro_des'>
+            <div>
+                <h3>나를 맞춰봐!</h3>
+            </div>
+            <div>
+                책의 내용, 제목, 장르등 책의 특징을 기반으로<br> Text to Image AI를 통해 생성된 이미지를 보고<br> 책 제목을 맞춰보세요!
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

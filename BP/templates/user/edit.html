@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <h1>회원 정보 수정</h1>
+  <form method="post" action="{% url 'user:edit' %}">
+    {% csrf_token %}
+    <div class='userbox2'>
+        <div class = 'input_divs'>
+            <div class='first'><label>Name</label></div>&emsp;<input type = "text" class = "input_1" name = "name" placeholder= {{user.name}} value = "{{ form.name.value|default_if_none:user.name}}">
+        </div>
+    </div>
+
+    <div class='userbox2'>
+        <div class = 'input_divs'>
+            <div class='first'><label>Nickname</label></div> &emsp;<input type = "text" class = "input_1" name = "nickname" placeholder= {{user.nickname}} value = "{{ form.nickname.value|default_if_none:user.nickname}}">
+        </div>
+    </div>
+
+    <div class='userbox2'>
+        <div class = 'input_divs'>
+            <div class='first'><label>Phone</label></div>&emsp;<input type = "text" class = "input_1" name = "phone" placeholder = {{user.phone}} value = "{{ form.phone.value|default_if_none:user.phone}}">
+        </div>
+    </div>
+
+    <div class='edit_btn'>
+        <button type="submit" class = "yn_btn">수정</button>
+        <button class = "yn_btn" type="button" onclick = "window.location='{% url 'user:mypage' %}';">취소</button>
+    </div>
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,162 @@
+{% load static %}
+<html>
+    <head>
+        <title>  책크미  </title>
+        {% block title %}
+        {% endblock %}
+        
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+        <link rel="icon" type="image/png" href="{% static 'images/img_02.png' %}">
+        {% if alert != '' %}
+            <script>
+                // get 방식으로 url/?alert=~~~ 하고 넣으면 해당 값이 출력됨
+                alert(" {{ alert }} ");
+            </script>
+        {% endif %}
+        <!-- Additional CSS Files -->
+        {% block extrahead %}
+        {% endblock %}
+    </head>
+    <div class = 'topnav'>
+        <!-- leftside_aligned -->
+        <a href="/">
+            <div class = 'ingredients'>
+                <h2 style='margin-top:-5px;'>CheckMe</h2>
+            </div>
+        </a>
+        
+        <!-- rightside_aligned -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'user:mypage'%}">
+                <div class = 'ingredients user_alter'>
+                    <h4>내 정보</h4>
+                </div>
+            </a>
+            
+            <a href="{% url 'user:logout' %}">
+                <div class = 'ingredients user_alter'>
+                    <h4>로그아웃</h4>
+                </div>
+            </a>
+        {% else %}
+            <a href="{% url 'user:register' %}">
+                <div class = 'ingredients user_alter'>
+                    <h4>회원가입</h4>
+                </div>
+            </a>
+            <a href="{% url 'user:login' %}">
+                <div class = 'ingredients user_alter'>
+                    <h4>로그인</h4>
+                </div>
+            </a>
+        {% endif %}
+        
+        
+        
+    </div>
+    <div class = 'sidenav_caller' onclick = 'call_sidenav()'>
+        =
+    </div>
+    <div class = 'sidenav'>
+        <div class = 'ingredients' id = 'sidenav_closer' onclick = 'kill_sidenav()'>
+            &lt;    <!-- 얘 지우면 버튼이 안보여요 -->
+        </div>
+        <div></div>
+
+        <a href="/">
+            <div class = 'ingredients2'>
+                <h2>CheckMe</h2>
+            </div><br>
+        </a> 
+
+        {% comment %} <a href="{% url 'about'%}">
+            <div class = 'ingredients ingr_clk'>
+                About
+            </div>
+        </a><br><br> {% endcomment %}
+
+        <a href="{% url 'personal:loading'%}">
+            <div class = 'ingredients ingr_clk'>
+                Personal Book
+            </div><br>
+        </a>
+        <a href="{% url 'recommend:index'%}">
+            <div class = 'ingredients ingr_clk'>
+                What U Want?
+            </div><br>
+        </a>
+        
+        <a href="{% url 'quiz:index'%}">
+            <div class = 'ingredients ingr_clk'>
+                Book Quiz
+            </div><br><br>
+        </a>
+
+        <a href="{% url 'book:list' %}">
+            <div class = 'ingredients ingr_clk'>
+                도서 검색
+            </div><br>
+        </a>
+        
+        <div class = 'ingredients2'>
+            게시판
+        </div><br>
+
+        <a href="{% url 'board:posts'%}">
+            <div>
+                &emsp;&emsp;<p class = 'ingredients ingr_clk'>자유 게시판</p>
+            </div>
+        </a>
+
+        <a href="{% url 'board:bookreports'%}">
+            <div>
+                &emsp;&emsp;<p class = 'ingredients ingr_clk'>독후감 게시판</p>
+            </div><br>
+        </a>
+
+        <div class='line_div'></div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'user:mypage'%}">
+                <div class = 'ingredients ingr_clk'>
+                    내 정보
+                </div><br>
+            </a>
+            
+            <a href="{% url 'user:logout' %}">
+                <div class = 'ingredients ingr_clk'>
+                    로그아웃
+                </div><br>
+            </a>
+
+        {% else %}
+            <a href="{% url 'user:register' %}">
+                <div class = 'ingredients ingr_clk'>
+                    회원가입
+                </div><br>
+            </a>
+            <a href="{% url 'user:login' %}">
+                <div class = 'ingredients ingr_clk'>
+                    로그인
+                </div><br>
+            </a>
+        {% endif %}
+    </div>
+    <body>
+
+        <button id="scrollButton_main" onclick="scrollToTop()" style='border:1px solid #000;'></button>
+
+        <div class = 'content_div'>
+            {% block content %}
+            {% endblock %}
+        </div>
+        <hr>
+        <div class = 'footer'>
+            <h5>나의 감성을 저격하는 이미지 기반 독자 맞춤형 도서 추천 서비스</h5><br>
+            <small><h5>위 사이트는 '알라딘 서점' API 의 데이터 베이스를 이용하여 제작되었습니다.</h5></small><br>
+            <small><h5>KT AIVLE SCHOOL AI TRACK 1반 1조</h5></small><br>
+        </div>
+    </body>
+    
+</html>

@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+
+__pycache__/
+
+*.py[cod]
+BP/.env
+*.csv
+
+BP/requirements.txt
+
+
+# 추천 시스템용 pkl 파일 
+*ver2.pkl
+

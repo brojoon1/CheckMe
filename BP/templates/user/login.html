@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+<!-- 추가적으로 적용할 CSS 는 이쪽으로, 순서가 뒤 이면 overwrite 함 -->
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="login-content">
+        <h2 class="login-title">LogIn</h2>
+        <form class="login-form validated-form" id="login-form" name="login-form" method="post" action="{% url 'user:login' %}" novalidate="novalidate" entype="application/x-www-form-urlencoded">
+            {% csrf_token %}
+            <div class="login-input-wrapper">
+                <input class="login-email" id="email" name="username" type="text" placeholder="ID" name="username" id="username" value="{{ form.username.value|default_if_none:""}}">
+            </div>
+            <div class="login-input-wrapper">
+                <input class="login-password" type="password" placeholder="Password" name="password" id="password" value="{{ form.password.value|default_if_none:'' }}">
+            </div>
+            {% if error %}
+            <div class="error_message">{{ error }}</div>
+            {% endif %}
+            <button style='width:340px;margin-top:13px;' class="btn-login">LogIn</button>
+            <div class='service-btn'>
+                <a class="login-link" href="{% url 'user:register' %}">Register</a>
+                <a>&nbsp;|&nbsp;</a>
+                <a class="login-link" href="{% url 'user:forgot_id' %}">Forgot ID?</a>
+                <a>&nbsp;|&nbsp;</a>
+                <a class="login-link" href="{% url 'user:forgot_pw' %}">Forgot password?</a>
+            </div>
+
+            </form>
+            <hr>
+    </div>
+</div>
+<div class="social">
+    {% load socialaccount %} 
+    <div class='btn-google'>
+        <a href="{% provider_login_url 'google' %}" target="_blank">
+            <img src="{% static 'images/google_icon.PNG' %}" alt="위의 이미지를 누르면 연결됩니다." class='icon_img'>
+            <h4 style='margin-right:12px;'>Login with Google</h4>
+        <a>
+        
+    </div>
+    <div class='btn-kakao'>
+        <a href="{% provider_login_url 'kakao' %}" target="_blank">
+            <img src="{% static 'images/kakao_icon.PNG' %}" alt="위의 이미지를 누르면 연결됩니다." class='icon_img'>
+            <h4 style='margin-right:20px;'>Login with Kakao</h4>
+        <a>
+    </div>
+</div>
+{% endblock %}

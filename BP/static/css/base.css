@@ -1,0 +1,158 @@
+@font-face {
+    font-family: "binggrae"; /* 사용하고 싶은 font-family명을 지정 */
+    src: url("/static/fonts/Binggrae.ttf") format("truetype"); /* 폰트파일 불러오기 */
+}
+* {
+    font-family: 'binggrae';
+    margin: 0;
+    padding: 0;
+    list-style: none; 
+}
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+    background-color: #f1efe9;
+}
+
+.topnav{
+    position: fixed;
+    width: calc(100% - 80px);
+    height: 60px;
+    box-shadow: 0px 5px #c0c0c0;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 80px;
+    padding-top: 10px;
+    transition: 0.2s;
+    background-color: #ebe4cd;
+    z-index: 1;
+}
+
+.ingredients, .ingredients2{
+    display: inline-block;
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    transition:background-color 0.5s, color 0.5s;
+}
+
+.user_alter{
+    float: right;
+}
+
+.topnav .user_alter:active, .sidenav .ingr_clk:active {
+    font-weight: 700;
+}
+
+
+.sidenav_caller{
+    position: fixed;
+    font-size: 30px;
+    width: 40px;
+    height: 40px;
+    margin: 15px 20px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0);
+    text-align: center;
+    vertical-align: middle;
+    transition: background-color 0.5s, margin 0.5s;
+    color: black;
+    z-index: 3;
+}
+.sidenav_caller:hover{
+    background: rgba(192, 192, 192, 0.9);
+    cursor: pointer;
+}
+.sidenav{
+    position: fixed;
+    width: 260px;
+    height: 100vh;
+    background: rgba(192, 192, 192, 0.9);
+    padding-left: 20px;
+    padding-top: -5px;
+    margin-left: -300px;
+    transition:margin 0.5s;
+    text-align: left;
+    z-index: 2;
+}
+.sidenav .ingredients, .sidenav .ingredients2{
+    padding: 10px;
+}
+.sidenav .ingredients:hover {
+    color: white;
+    border-radius: 10px;
+    background-color: #0008;
+}
+
+
+#sidenav_closer{
+    width : 20px;
+    border-radius: 20px;
+    float: right;
+}
+#sidenav_closer:hover{
+    cursor: pointer
+}
+
+.content_div{
+    margin-top: 130px;
+    margin-bottom: 50px;
+    width: 1000px;
+    display: inline-block;
+    text-align: center;
+    min-height: calc(100vh - 280px);
+}
+
+.footer{
+    width: 100%;
+    height: 100px;
+    padding-top: 20px;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 스크롤바 커스텀 시작 */
+body::-webkit-scrollbar {
+    width: 15px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #FDD692;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: rgb(202, 202, 202);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #e9d9A7;
+}
+/* 스크롤바 커스텀 끝 */
+
+/* 맨위로 올려주는 버튼 */
+#scrollButton_main {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    width: 40px;
+    height: 40px;
+    background-image: url('https://png.pngtree.com/png-clipart/20190619/original/pngtree-up-vector-icon-png-image_4017139.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+    transition: opacity 0.2s;
+}
+
+.line_div{
+    height:1px;
+    width:200px;
+    background-color:gray;
+    color:gray;
+}
